@@ -1,1 +1,54 @@
 
+pipeline {
+    agent any
+    stages{
+        stage ('clone the repo') 
+              {
+            steps {
+                 git branch: 'master', url:'https://github.com/gautham73/mvnproj.git'
+                
+                   }
+              }
+            stage ('build the file') {
+                steps {
+                sh "mvn package "
+                }
+            }
+            stage ('build the image'){
+                steps {
+                    sh 'docker build -t mydocimg:latest .'
+                    sh 'docker tag mydocimg gautham73kumar/mydocimg:latest'
+                }
+            }
+            stage ('push the image to docker hub') {
+                steps {
+                     sh "docker login -u gautham73kumar -p Gautham72@"
+                          
+                    sh "docker push gautham73kumar/mydocimg"
+                }
+             }
+            stage ('docker image run on jenkins server') {
+                steps 
+                {
+                    sh 'docker run -d -p 8090:8080 gautham73kumar/mydocimg'
+                }
+            }
+            stage ('run docker image on remote host')
+            {
+                steps {
+                                   
+                         
+                    sh "docker -H ssh://root@172.31.19.228 pull gautham73kumar/mydocimg"
+                    sh "docker -H ssh://root@172.31.19.228 run -d -p 8080:8080 gautham73kumar/mydocimg"
+
+
+                           }  
+                 
+            }
+                
+            }
+                
+            
+         }
+        
+     
