@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
     stages{
@@ -22,11 +21,12 @@ pipeline {
             }
             stage ('push the image to docker hub') {
                 steps {
-                     sh "docker login -u gautham73kumar -p Gautham72@"
-                          
-                    sh "docker push gautham73kumar/mydocimg"
+                     withDockerRegistry(credentialsId: 'dockerhub', url: "") {
+
+                           sh "docker push gautham73kumar/mydocimg"
                 }
              }
+            }
             stage ('docker image run on jenkins server') {
                 steps 
                 {
@@ -50,5 +50,3 @@ pipeline {
                 
             
          }
-        
-     
