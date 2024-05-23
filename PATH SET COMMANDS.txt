@@ -1,0 +1,36 @@
+
+https://download.oracle.com/java/22/latest/jdk-22_linux-x64_bin.tar.gz
+https://tomcat.apache.org/download-10.cgi
+https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
+(updates.jenkins-ci.org download/war) https://updates.jenkins-ci.org/download/war/2.459/jenkins.war
+
+wget  
+tar -xzf 
+
+apt-get update -y 
+after updatinf the paths again do again apt-get update
+apt-get install net-tools
+
+do in /opt folder
+
+export JAVA_HOME="/opt/jdk-22.0.1"
+export PATH=$JAVA_HOME/bin:$PATH
+
+export CATALINA_HOME="/opt/apache-tomcat-10.1.24"
+export PATH=$CATALINA_HOME/bin:$PATH
+
+export M2_HOME="/opt/apache-maven-3.9.6"
+export PATH=$M2_HOME/bin:$PATH
+
+cd /opt/apache-tomcat-10.1.24/webapps   https://updates.jenkins-ci.org/download/war/2.459/jenkins.war
+shutdown.sh
+startup.sh
+
+source .profile
+#java -version
+#mvn --version
+#echo $CATALINA_HOME
+
+#startup.sh
+ #netstat -lntp
+ #shutdown.sh
